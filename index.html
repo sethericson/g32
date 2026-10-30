@@ -179,7 +179,7 @@ input.txt{font-family:var(--px);font-size:12px;padding:10px;background:#05071a;c
 .room .flash{position:absolute;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.6) 25%,transparent 65%);opacity:0;animation:flash 2.6s infinite;pointer-events:none}
 @keyframes flash{0%,86%,100%{opacity:0}88%{opacity:1}92%{opacity:0}}
 .room .crowdrow{position:absolute;left:0;right:0;bottom:0;height:52px;background:repeating-linear-gradient(90deg,#11152f 0 26px,#0b0e22 26px 30px)}
-.qbox{width:100%;max-width:820px;margin:0 auto;padding-block:16px 28px;padding-left:max(16px,var(--sal));padding-right:max(16px,var(--sar));display:flex;flex-direction:column;gap:12px}
+.qbox{box-sizing:border-box;width:100%;max-width:820px;margin:0 auto;padding-block:16px 28px;padding-left:max(16px,var(--sal));padding-right:max(16px,var(--sar));display:flex;flex-direction:column;gap:12px}
 .reporter{display:flex;gap:10px;align-items:center}
 .qtext{font-size:24px;min-height:3.2em}
 .answers{display:flex;flex-direction:column;gap:8px}
@@ -223,7 +223,7 @@ input.txt{font-family:var(--px);font-size:12px;padding:10px;background:#05071a;c
 .rstars .stars{display:flex;justify-content:center;transform:none}.rstars .stars svg{width:15px;height:15px;filter:drop-shadow(1px 1px 0 #000) drop-shadow(-1px 0 0 #000)}
 .rcard{box-shadow:inset 0 0 0 2px #fff,0 0 0 2px #000 !important;border-color:#000 !important}
 #press{background:#090c22 !important;color:#fff}
-.pi{width:100%;max-width:900px;margin:0 auto;padding:12px max(14px,var(--sal)) 28px;display:flex;flex-direction:column;gap:10px}
+.pi{box-sizing:border-box;width:100%;max-width:900px;margin:0 auto;padding:12px max(14px,var(--sal)) 28px;display:flex;flex-direction:column;gap:10px}
 .pi-top{display:flex;justify-content:space-between;font-family:var(--px);font-size:10px}
 .pi-cc,.pi-count{padding:5px 9px;background:#141a3d;border:2px solid #4a56a8;border-radius:6px}
 .pi-title{font-family:var(--px);font-size:clamp(16px,calc(4.6*var(--vw)),28px);text-align:center;margin:6px 0 0;color:#fff;text-shadow:3px 3px 0 #000;letter-spacing:2px}
@@ -292,20 +292,29 @@ input,textarea{-webkit-user-select:text;user-select:text;font-size:16px}
 #stageWrap{padding-left:var(--sal);padding-right:var(--sar);box-sizing:border-box}
 #cv{image-rendering:auto;cursor:default}
 @media (hover:none){.btn:hover{filter:none;transform:none}.tab:hover{color:var(--dim)}.tab[aria-selected="true"]:hover{color:#1d1000}}
-/* on-field buttons: big, thumb sized */
-#sui .btn{font-size:clamp(9px,2.1cqw,15px);padding:1.9cqh 2.3cqw;min-height:42px;min-width:64px}
-#sui .btn.sm{font-size:clamp(8px,1.5cqw,12px);padding:1.4cqh 1.4cqw;min-height:32px;min-width:0}
-.srow{gap:2cqw;bottom:calc(4cqh + var(--sab))}
-.srow.trk{bottom:calc(15cqh + var(--sab));padding-right:max(2cqw,var(--sar))}
-.stop{gap:1.4cqw;right:max(1.2cqw,var(--sar))}
-.playname{bottom:calc(16.5cqh + var(--sab));font-size:clamp(8px,1.8cqw,14px)}
-.coachtip p{font-size:clamp(14px,2.2cqw,19px)}
-.coachtip .skip{min-height:34px}
-/* front office (hub / press / draft): thumb-friendly + compact in landscape */
-.btn{min-height:44px}
-.btn.xs{min-height:34px;font-size:9px;padding:6px 9px}
-.tab{min-height:42px;padding:10px 14px;font-size:10px}
-#hub{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:var(--sab)}
+/* ---- on-field buttons: sized in canvas units so they match the HUD text and never crowd it ---- */
+#sui .btn{font-size:3.1cqh;line-height:1.15;padding:2.3cqh 2.6cqh;min-height:10.4cqh;min-width:0;letter-spacing:.3px;border-width:2px}
+#sui .btn.sm{font-size:2.55cqh;padding:1.7cqh 2cqh;min-height:8.4cqh}
+.srow{gap:1.8cqh;bottom:calc(3.2cqh + var(--sab));flex-wrap:nowrap;padding:0 max(2cqw,var(--sar)) 0 max(2cqw,var(--sal))}
+.srow .btn{flex:0 1 auto;white-space:nowrap}
+.srow.trk{bottom:calc(14cqh + var(--sab));padding-right:max(2cqw,var(--sar))}
+.stop{top:9.4cqh;gap:1.2cqh;right:max(1cqw,var(--sar))}
+#sui .stop .btn.sm{font-size:2.15cqh;padding:1.2cqh 1.6cqh;min-height:6.6cqh}
+.stop.ph-kick button[data-act=mute],.stop.ph-kick button[data-act=simask],.stop.ph-pat button[data-act=mute]{display:none}
+.playname{bottom:calc(15.2cqh + var(--sab));font-size:2.9cqh;line-height:1.5;padding:0 6cqw}
+.coachtip{padding:1.6cqh 2cqh;gap:1.6cqh;left:max(1.5cqw,var(--sal));transform:none;width:min(66cqw,540px);animation:none;top:calc(9.4cqh + 2px)}
+.coachtip p{font-size:clamp(13px,4.4cqh,19px);line-height:1.1}
+.coachtip .who{font-size:2.4cqh}
+#sui .coachtip .skip{font-size:2.3cqh;padding:1.2cqh 1.8cqh;min-height:0}
+/* ---- front office (hub / press / draft / modals) ---- */
+#hub{z-index:1;isolation:isolate;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:var(--sab)}
+#press{z-index:30;box-sizing:border-box;padding-left:var(--sal);padding-right:var(--sar)}
+#modal{z-index:40;padding:max(8px,var(--sat)) max(10px,var(--sar)) max(8px,var(--sab)) max(10px,var(--sal))}
+#modal .panel{max-height:100%;padding:12px}
+.pi,.qbox{box-sizing:border-box}
+.btn{min-height:40px}
+.btn.xs{min-height:32px;font-size:9px;padding:6px 9px}
+.tab{min-height:38px;padding:9px 13px;font-size:10px}
 .wrap{padding-left:max(14px,var(--sal));padding-right:max(14px,var(--sar))}
 @media (max-height:560px){
   body{font-size:19px}
@@ -325,8 +334,22 @@ input,textarea{-webkit-user-select:text;user-select:text;font-size:16px}
   .tabs .spacer{flex:1 0 8px}
   .grid2{gap:10px}
   .qbox{padding-block:10px 20px}
-  #modal{padding:8px}
+  .tbl{font-size:16px}.tbl th{font-size:7px}.tbl td{padding:3px 5px;white-space:normal}.scroll .tbl td{white-space:nowrap}
+  .pc-grid{grid-template-columns:118px 1fr;gap:10px}.pc-card .rcard{width:118px}
+  .pc-attrs{padding:6px;gap:2px}.pc-ab{height:14px;border-width:2px}.pc-al{font-size:9px;margin-top:2px}.pc-plus{width:26px;height:26px;line-height:26px}
+  /* press room */
+  .pi{padding:6px max(12px,var(--sal)) 14px max(12px,var(--sal));gap:7px}
+  .pi-title{font-size:20px;margin:0;letter-spacing:1px}
+  .pi-rep{font-size:15px}
+  .pi-main{gap:10px;min-height:0}
+  .pi-card,.pi-card .rcard{width:84px}
+  .pi-bubble{font-size:19px;min-height:0;padding:10px 12px;border-width:2px}
+  .pi-btn{font-size:17px;padding:8px 10px;border-width:2px}
+  .pi-answers{gap:6px}.pi-ans{grid-template-columns:86px 1fr;gap:7px}
+  .pi-result{padding:10px;gap:6px}
+  .pi-morale{padding:5px 8px;font-size:8px}.pi-morale b{font-size:10px}
 }
+@media (max-width:760px) and (max-height:560px){.top .coachpic{display:none}.stats .chip{padding:3px 6px}.pi-main{grid-template-columns:auto 1fr}.pi-morale{grid-column:span 2;flex-direction:row;justify-content:center}}
 /* hint line: keep it on one row */
 .gate .g,#gate .g{padding:0 6vw}
 </style>
@@ -1476,7 +1499,7 @@ function onPointerUp(p){
 }
 function kneel(){const r=P.ret;if(!r||P.over)return;r.kneel=true;r.vx=r.vy=0;P.fx.push({t:'KNEEL',x:r.x,y:r.y-6,life:.8});endPlay({type:'tackle',spot:0},'down')}
 function juke(dir){const c=carrier();if(!c||!runnerActive()||c.dive||P.over||c.jkCd>0||false)return;
-  c.jk=.2;c.jkDir=dir;c.jkCd=.6;c.cutT=.34;c.vy=dir*c.spd*1.9;c.truck=false;SFX.juke();dust(c.x-.3,c.y,5,.9)}
+  c.jk=.17;c.jkDir=dir;c.jkCd=.05;c.cutT=.34;c.vy=dir*c.spd*1.9;c.truck=false;SFX.juke();dust(c.x-.3,c.y,5,.9)}
 function dive(){const c=carrier();if(!c||!runnerActive()||c.dive||P.over)return;c.dive=.36;c.truck=false;c.pose='ball';SFX.juke();c.down=true;P.fx.push({t:'DIVE!',x:c.x,y:c.y-6,life:.6})}
 function onKey(k){
   if(mode==='title'&&(k==='enter'||k===' ')){const b=$('#sui .btn');if(b)b.click();return}
@@ -1505,7 +1528,7 @@ function go2(){G.phase='presnap';G.los=97;G.down=1;G.togo=3;G.ballY=FW/2;setupFo
 /* ---------- in-game HTML controls ---------- */
 function updateGameUI(){
   const ui=$('#sui');if(mode!=='game'||!G){return}
-  let h=`<div class="stop"><button class="btn ghost sm" data-act="mute" aria-label="Toggle sound">${SET.sound?'SOUND ON':'SOUND OFF'}</button><button class="btn ghost sm" data-act="pause">MENU</button>${G.tut||G.simmed?'':'<button class="btn ghost sm" data-act="simask">SIM</button>'}</div>`;
+  let h=`<div class="stop ph-${G.phase}"><button class="btn ghost sm" data-act="mute" aria-label="Toggle sound">${SET.sound?'SOUND ON':'SOUND OFF'}</button><button class="btn ghost sm" data-act="pause">MENU</button>${G.tut||G.simmed?'':'<button class="btn ghost sm" data-act="simask">SIM</button>'}</div>`;
   const T=G.tut,only=t=>!T||tutAllows(t);
   if(G.phase==='presnap'){
     h+=`<div class="srow">`;
@@ -1859,8 +1882,8 @@ function render(dt){
   if(G.phase==='kick')drawKick();
   if(G.phase==='banner')drawBanner();
   if(G.phase==='play'&&P&&P.type==='kr'&&!P.over&&P.ret.x<0&&P.t<2.4)txt('SWIPE SIDEWAYS TO KNEEL',W/2,H-34,'#ffc933',7,'center');
-  if(G.phase==='okchoice'){txt('YOUR KICKOFF',W/2,H-62,'#ffc933',8,'center');txt(`ONSIDE KICKS ARE SIMMED · ${G.okOdds}% ODDS WITH YOUR KICKER`,W/2,H-50,'#fff',7,'center')}
-  if(G.phase==='krchoice'){ctx.fillStyle='rgba(3,4,15,.75)';ctx.fillRect(W/2-176,H-70,352,30);txt('CAUGHT IN THE END ZONE',W/2,H-64,'#ffc933',8,'center');txt('SWIPE SIDEWAYS = KNEEL  ·  TAP = RUN IT OUT',W/2,H-52,'#fff',7,'center')}
+  if(G.phase==='okchoice'){txt('YOUR KICKOFF',W/2,H-74,'#ffc933',8,'center');txt(`ONSIDE KICKS ARE SIMMED · ${G.okOdds}% ODDS WITH YOUR KICKER`,W/2,H-62,'#fff',7,'center')}
+  if(G.phase==='krchoice'){ctx.fillStyle='rgba(3,4,15,.75)';ctx.fillRect(W/2-176,H-82,352,30);txt('CAUGHT IN THE END ZONE',W/2,H-76,'#ffc933',8,'center');txt('SWIPE SIDEWAYS = KNEEL  ·  TAP = RUN IT OUT',W/2,H-64,'#fff',7,'center')}
   if(G.phase==='presnap'&&P&&!G.tut){const tip=G.is2pt?'TWO-POINT TRY FROM THE 3':'CHOOSE A PLAY';txt(tip,W/2,H-56,'#fff',8,'center')}
   if(G.phase==='play'&&P&&P.type==='pass'&&P.canPass&&P.t>.2&&!PTR.aim&&P.t<3){txt('DRAG BACK · RELEASE TO THROW',W/2,H-12,'#fff',7,'center')}
   if(G.phase==='play'&&P&&runnerActive()&&P.t-(P.thrown||0)<6){if(P.autoRun)txt('FOLLOWING THE PLAY · DRAG TO TAKE OVER',W/2,H-12,'#fff',7,'center');else{txt('DRAG TO CUT · FLICK UP/DOWN TO JUKE · SWIPE FORWARD TO DIVE',W/2,H-23,'#fff',7,'center');txt('HOLD THE BUTTON TO TRUCK',W/2,H-12,'#ffc933',7,'center')}}
@@ -1899,7 +1922,7 @@ function drawHolder(){
   const b=P.ball,h=b.holder;let t='';
   if(b.state==='held'&&h&&h.side==='o'&&h.pid){const pl=findP(h.pid);if(pl)t=pl.name.split(' ').slice(-1)[0].toUpperCase()+' ('+(pl.slot||h.role)+')'}
   if(!t)return;
-  const w=t.length*8+10,x=4,y=H-18;
+  const w=t.length*8+10,x=4,y=(G.phase==='play')?H-18:H-62;
   ctx.fillStyle='rgba(5,7,26,.82)';ctx.fillRect(x,y,w,13);ctx.strokeStyle='#ffc933';ctx.lineWidth=1;ctx.strokeRect(x+.5,y+.5,w-1,12);
   ctx.fillStyle='#8a5a2b';ctx.fillRect(x+3,y+5,5,3);
   txt(t,x+11,y+3,'#fff',6);
